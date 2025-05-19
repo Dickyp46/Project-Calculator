@@ -2,15 +2,13 @@
   const expressionDisplay = document.getElementById('expression');
   const resultDisplay = document.getElementById('result');
 
-  // State variables
   let currentInput = '0';
   let expression = '';
   let memory = 0;
   let lastResult = null;
-  let powerMode = false; // For xʸ, user enters exponent after base
+  let powerMode = false;
   let baseForPower = null;
 
-  // Helper functions
   function updateDisplays() {
     expressionDisplay.textContent = expression;
     if (currentInput === '') {
@@ -35,7 +33,6 @@
 
   function appendInput(val) {
     if (powerMode) {
-      // Entering exponent for x^y
       if (val === '.' && currentInput.includes('.')) return;
       if (currentInput === '0' && val !== '.') {
         currentInput = val;
@@ -45,7 +42,6 @@
       updateDisplays();
       return;
     }
-    // Normal input append
     if (val === '.') {
       if (!currentInput.includes('.')) {
         currentInput += '.';
@@ -68,7 +64,6 @@
 
   function addOperator(operator) {
     if (powerMode) {
-      // Calculate power now
       if (currentInput === '' || baseForPower === null) return;
       const base = parseFloat(baseForPower);
       const exponent = parseFloat(currentInput);
@@ -85,7 +80,6 @@
       return;
     }
     if (expression !== '' && /[+\-*/%]$/.test(expression)) {
-      // Replace last operator if user inputs another operator consecutively
       expression = expression.slice(0, -1) + operator;
     } else {
       if (expression === '') {
@@ -100,7 +94,6 @@
 
   function calculateExpression() {
     if (powerMode) {
-      // Calculate power now
       if (currentInput === '' || baseForPower === null) return;
       const base = parseFloat(baseForPower);
       const exponent = parseFloat(currentInput);
@@ -126,10 +119,10 @@
 
     let fullExpression = expression + currentInput;
 
-    // Clean trailing operators
+    
     fullExpression = fullExpression.replace(/[+\-*/%]+$/, '');
 
-    // Convert % to calculation (e.g. 50% as 0.5)
+    
     fullExpression = fullExpression.replace(/(\d+(\.\d+)?)%/g, '($1*0.01)');
 
     try {
@@ -186,7 +179,7 @@
         result = Math.cos(toRadians(number));
         break;
       case 'tan':
-        // Limit possibilities to avoid large numbers due to tan(90)
+        
         let ang = number % 360;
         if (ang === 90 || ang === 270) {
           currentInput = 'Error';
@@ -218,7 +211,7 @@
         result = toDegrees(Math.atan(number));
         break;
       case 'power':
-        // Prepare for power input after base
+        
         baseForPower = currentInput;
         powerMode = true;
         currentInput = '';
@@ -253,7 +246,7 @@
     }
   }
 
-  // Attach event listeners
+  
   document.querySelectorAll('.buttons button').forEach(button => {
     button.addEventListener('click', () => {
       const value = button.getAttribute('data-value');
@@ -300,7 +293,7 @@
         return;
       }
 
-      // For digits and operators
+      
       if (value) {
         if ('0123456789.'.includes(value) || value === '+/-') {
           appendInput(value);
@@ -311,10 +304,10 @@
     });
   });
 
-  // Initialize
+
   updateDisplays();
 
-  // Keyboard support (optional, but helpful)
+
   window.addEventListener('keydown', (e) => {
     if (e.ctrlKey || e.altKey || e.metaKey) return;
 

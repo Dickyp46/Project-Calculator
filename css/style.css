@@ -1,5 +1,4 @@
  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
-  /* Reset & base */
   * {
     box-sizing: border-box;
   }
@@ -96,7 +95,6 @@
     box-shadow: inset 4px 4px 10px rgba(0,0,0,0.7);
   }
 
-  /* Special buttons */
   .btn-function {
     background: #4a6ea9;
   }
@@ -119,12 +117,10 @@
     background: #ff952b;
   }
 
-  /* Big buttons */
   .span-two {
     grid-column: span 2;
   }
 
-  /* Scroll on expression if overflow */
   .expression-display {
     overflow-x: auto;
     white-space: nowrap;
